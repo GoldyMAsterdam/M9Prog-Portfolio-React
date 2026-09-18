@@ -16,7 +16,7 @@ export const PROJECTS: Project[] = [
   {
     slug: 'keurveilig',
     title: 'Keurveilig',
-    date: '2026-05',
+    date: '2026-03-21 (Still actively working on)',
     role: 'Freelance',
     stack: ['React', 'Tailwind', 'Vite', 'Vercel'],
     status: 'live',
@@ -26,16 +26,16 @@ export const PROJECTS: Project[] = [
   {
     slug: 'michelvisuals',
     title: 'Michel Visuals',
-    date: '2026-07',
+    date: '2026-07-21 - 2026-08-15',
     role: 'Freelance',
     stack: ['React', 'React Router', 'Tailwind', 'Vite', 'Vercel'],
     status: 'live',
     url: 'https://michelvisuals.com',
     summary:
-      'Freelance job for a videographer. Multiple pages, client-side routing.',
+      'Freelance job for an editor.',
   },
   {
-    slug: 'portfolio',
+    slug: 'Portfolio',
     title: 'This portfolio',
     date: '2026-09',
     role: 'Own work',
