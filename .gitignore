@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Other files :P
+compare.tsx
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,6 +1,6 @@
 import { month, PROJECTS } from '../projects.ts'
 
-export function V1Stil() {
+export function V1Quiet() {
   return (
     <div className="min-h-dvh bg-[#05070d] text-[13px] text-ink">
       <header className="border-line/70 border-b">

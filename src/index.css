@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+@theme {
+  --color-field: #04091a;
+  --color-surface: #080e20;
+  --color-surface-hi: #0d152c;
+  --color-line: #17203c;
+  --color-glow: #184e96;
+  --color-cold: #cef6ff;
+  --color-warm: #ffc4e0;
+  --color-ink: #dfe7f5;
+  --color-ink-dim: #7f8db0;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-field);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background-image: radial-gradient(
+    120ch 80ch at 12% -10%,
+    color-mix(in oklab, var(--color-glow) 34%, transparent),
+    transparent 70%
+  );
+  background-attachment: fixed;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
