@@ -12,10 +12,6 @@ export default function App() {
       <a className="skip" href="#record">Skip to content</a>
 
       <div className="page-shell">
-        <header className="masthead">
-          <h1>Goldy</h1>
-        </header>
-
         <aside className="rail" aria-label="Sidebar navigation">
           <Panel title="Navigation">
             <nav className="nav-list" aria-label="Main navigation">
