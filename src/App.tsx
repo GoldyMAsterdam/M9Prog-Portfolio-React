@@ -10,14 +10,14 @@ export default function App() {
   return (
     <>
       <Sky />
-      <a className="skip" href="#record">Skip to content</a>
+      <a className="skip" href="#work">Skip to content</a>
 
       <div className="page-shell">
         <aside className="rail" aria-label="Sidebar navigation">
           <Panel title="Navigation">
             <nav className="nav-list" aria-label="Main navigation">
-              <a href="#record" aria-current="page">Work</a>
-              <a href="#record">About</a>
+              <a href="#work" aria-current="page">Work</a>
+              <a href="#work">About</a>
               <a href="mailto:tychoboom1@gmail.com">Contact</a>
             </nav>
           </Panel>
@@ -62,14 +62,14 @@ export default function App() {
         </aside>
 
         <main className="main-column">
-          <article className="record" id="record">
-            <header className="record-head">
+          <article className="work" id="work">
+            <header className="work-head">
               <h2>{project.title}</h2>
               <span>{domain}</span>
               <strong>{project.status}</strong>
             </header>
 
-            <div className="record-body">
+            <div className="work-body">
               <div>
                 <div className="project-shot" role="img" aria-label="Michel Visuals project preview">
                   <img src={michelVisualsImage} alt="Michel Visuals project preview" />

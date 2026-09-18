@@ -117,8 +117,8 @@ a:hover { color: #3db2e3; }
 .social li { padding: 5px 0; }
 .social li + li { border-top: 1px solid #16203699; }
 .main-column { grid-column: 3; min-width: 0; }
-.record { border: 1px solid var(--line); background: #0a1322f2; }
-.record-head {
+.work { border: 1px solid var(--line); background: #0a1322f2; }
+.work-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -127,7 +127,7 @@ a:hover { color: #3db2e3; }
   border-bottom: 1px solid var(--line);
   background: #16223c;
 }
-.record-head h2 {
+.work-head h2 {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 1.2vw + 0.9rem, 1.75rem);
@@ -136,8 +136,8 @@ a:hover { color: #3db2e3; }
   font-weight: 600;
   color: #fafafb;
 }
-.record-head span { color: var(--muted); font-size: 0.76rem; }
-.record-head strong {
+.work-head span { color: var(--muted); font-size: 0.76rem; }
+.work-head strong {
   margin-left: auto;
   color: #3db2e3;
   font-size: 0.72rem;
@@ -145,7 +145,7 @@ a:hover { color: #3db2e3; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.record-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 8fr); gap: 18px; padding: 12px; }
+.work-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 8fr); gap: 18px; padding: 12px; }
 .project-shot {
   display: grid;
   aspect-ratio: 16 / 9;
