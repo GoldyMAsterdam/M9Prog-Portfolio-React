@@ -1,3 +1,4 @@
+import michelVisualsImage from './assets/images/michelvisuals.jpg'
 import { PROJECTS } from './projects'
 import { Sky } from './Sky'
 
@@ -16,11 +17,8 @@ export default function App() {
           <Panel title="Navigation">
             <nav className="nav-list" aria-label="Main navigation">
               <a href="#record" aria-current="page">Work</a>
-              <a href="#techniques" className="sub">› Websites</a>
-              <a href="#techniques" className="sub">› School</a>
-              <a href="#techniques">Techniques</a>
-              <a href="#about">About</a>
-              <a href="#contact">Contact</a>
+              <a href="#record">About</a>
+              <a href="mailto:tychoboom1@gmail.com">Contact</a>
             </nav>
           </Panel>
 
@@ -44,20 +42,20 @@ export default function App() {
           <Panel title="Social media">
             <ul className="social">
               <li>
-                <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
-                <span>@goldy</span>
+                <a className="text-lg" href="https://github.com/GoldyMAsterdam" target="_blank" rel="noreferrer">GitHub</a>
+                <span className="text-base">@GoldyMAsterdam</span>
               </li>
               <li>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
-                <span>in/goldy</span>
+                <a className="text-lg" href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+                <span className="text-base">in/goldy</span>
+              </li>
+              <li> {/* Placeholder, later replaced with a contact form */}
+                <a className="text-lg" href="mailto:tychoboom1@gmail.com">Email</a>
+                <span className="text-base">mail</span>
               </li>
               <li>
-                <a href="mailto:tychoboom1@gmail.com">Email</a>
-                <span>mail</span>
-              </li>
-              <li>
-                <a href="#contact">CV</a>
-                <span>pdf</span>
+                <a className="text-lg" href="#contact">CV</a>
+                <span className="text-base">pdf</span>
               </li>
             </ul>
           </Panel>
@@ -74,11 +72,7 @@ export default function App() {
             <div className="record-body">
               <div>
                 <div className="project-shot" role="img" aria-label="Michel Visuals project preview">
-                  <span>
-                    MICHEL
-                    <br />
-                    VISUALS
-                  </span>
+                  <img src={michelVisualsImage} alt="Michel Visuals project preview" />
                 </div>
               </div>
 
@@ -110,25 +104,6 @@ export default function App() {
               An editor who needed a modern, responsive website to showcase his work. 
               Built with React and styled with Tailwind CSS.
             </p>
-
-            <div className="techniques" id="techniques">
-              <span>Techniques</span>
-              <a href="#record">
-                Client work <small>2</small>
-              </a>
-              <a href="#record">
-                Video-led <small>1</small>
-              </a>
-              <a href="#record">
-                Routing <small>1</small>
-              </a>
-              <a href="#record">
-                Dutch <small>3</small>
-              </a>
-              <a href="#record">
-                Handover <small>2</small>
-              </a>
-            </div>
           </article>
         </main>
       </div>

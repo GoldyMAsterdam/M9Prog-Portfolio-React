@@ -58,9 +58,9 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   font-family: var(--font-body);
-  font-size: clamp(13px, 0.6vw + 11px, 16px);
-  line-height: 1.55;
-  letter-spacing: -0.01em;
+  font-size: clamp(15px, 0.7vw + 12px, 18px);
+  line-height: 1.65;
+  letter-spacing: -0.008em;
   font-weight: 400;
   color: var(--text);
 }
@@ -88,10 +88,10 @@ a:hover { color: #3db2e3; }
   border-bottom: 1px solid var(--line);
   background: #131d33aa;
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  line-height: 1.4;
+  font-size: 0.72rem;
+  line-height: 1.45;
   font-weight: 500;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fafafb;
 }
@@ -102,7 +102,7 @@ a:hover { color: #3db2e3; }
   width: fit-content;
   max-width: 100%;
   font-size: 1rem;
-  line-height: 1.3;
+  line-height: 1.45;
   color: #edf3ff;
   text-decoration: none;
 }
@@ -130,13 +130,13 @@ a:hover { color: #3db2e3; }
 .record-head h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1vw + 0.8rem, 1.5rem);
-  line-height: 1.2;
+  font-size: clamp(1.25rem, 1.2vw + 0.9rem, 1.75rem);
+  line-height: 1.25;
   letter-spacing: -0.04em;
   font-weight: 600;
   color: #fafafb;
 }
-.record-head span { color: var(--muted); font-size: 0.75rem; }
+.record-head span { color: var(--muted); font-size: 0.76rem; }
 .record-head strong {
   margin-left: auto;
   color: #3db2e3;
@@ -150,15 +150,15 @@ a:hover { color: #3db2e3; }
   display: grid;
   aspect-ratio: 16 / 9;
   place-items: center;
+  overflow: hidden;
   border: 1px solid var(--line);
-  background: radial-gradient(circle at 72% 30%, #b8d9e2 0 2%, transparent 3%), linear-gradient(135deg, #16223c 0%, #355b70 38%, #0a1322 100%);
-  color: #e9f4f5;
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.1vw, 2.7rem);
-  line-height: 0.85;
-  letter-spacing: 0.08em;
-  text-align: center;
-  font-weight: 700;
+  background: linear-gradient(135deg, #16223c 0%, #355b70 38%, #0a1322 100%);
+}
+.project-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .shot-cap,
 .shot-cap { margin: 4px 0 0; }
@@ -167,8 +167,8 @@ a:hover { color: #3db2e3; }
   grid-template-columns: max-content minmax(0, 1fr);
   gap: 0 14px;
   margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 .spec dt, .spec dd { padding: 4px 0; border-top: 1px solid #16203677; }
 .spec dt:first-of-type, .spec dt:first-of-type + dd { border-top: 0; }
@@ -180,8 +180,8 @@ a:hover { color: #3db2e3; }
   padding: 12px;
   border-top: 1px solid var(--line);
   color: #c2cde0;
-  font-size: 0.8rem;
-  line-height: 1.7;
+  font-size: 0.84rem;
+  line-height: 1.75;
 }
 .techniques {
   display: flex;
