@@ -189,5 +189,5 @@ export function Sky() {
     resize(); window.addEventListener('resize', resize); frame = requestAnimationFrame(draw)
     return () => { cancelAnimationFrame(frame); window.removeEventListener('resize', resize) }
   }, [])
-  return <canvas ref={ref} aria-hidden className="sky-canvas" />
+  return <canvas ref={ref} aria-hidden className="pointer-events-none fixed inset-0 z-0 h-full w-full" />
 }
