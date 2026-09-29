@@ -33,7 +33,7 @@ function fractalNoise(x: number, y: number, octaves: number, seed: number) {
   return value / normalizer
 }
 
-function moonTexture(size: number) {
+export function moonTexture(size: number) {
   const texture = document.createElement('canvas')
   texture.width = size
   texture.height = size
@@ -99,13 +99,10 @@ export function Sky() {
     const context = canvas?.getContext('2d')
     if (!canvas || !context) return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const moon = moonTexture(360)
     let frame = 0
     let width = 0
     let height = 0
     let dpr = 1
-    let gutter = 0
-    let frameWidth = 0
     let stars: Array<{ x: number; y: number; radius: number; phase: number }> = []
     let particles: Particle[] = []
     let motes: Array<{ x: number; y: number; top: boolean; speed: number; phase: number }> = []
@@ -117,21 +114,21 @@ export function Sky() {
       canvas.width = width * dpr
       canvas.height = height * dpr
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
-      frameWidth = Math.min(width, Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--frame')) || 1560)
-      gutter = (width - frameWidth) / 2
       stars = Array.from({ length: Math.round((width * height) / 7200) }, () => ({ x: Math.random(), y: Math.random(), radius: Math.random() * .9 + .22, phase: Math.random() * TAU }))
       particles = Array.from({ length: Math.round(Math.min(38, Math.max(16, width * height / 1400000))) }, () => ({ x: Math.random(), y: Math.random(), depth: Math.random(), angle: Math.random() * TAU, sway: Math.random() * .8 + .2, phase: Math.random() * TAU }))
-      motes = Array.from({ length: Math.round(width / 2.2) }, () => ({ x: Math.random() * width, y: 46 + Math.random() * 72, top: Math.random() < .5, speed: .08 + Math.random() * .3, phase: Math.random() * TAU }))
+      motes = Array.from({ length: Math.round(width / 2.2) }, () => ({ x: Math.random() * width, y: Math.random() * 72, top: Math.random() < .5, speed: .08 + Math.random() * .3, phase: Math.random() * TAU }))
     }
 
     const draw = (time: number) => {
       const breath = reduced ? 0 : Math.sin(time * .000055)
-      const drift = reduced ? 0 : Math.sin(time * .000031)
-      const radius = frameWidth * (178 / 1560)
-      const moonX = (gutter + frameWidth) - frameWidth * (136 / 1560) + radius + drift * width * .003
-      const moonY = height * .5 - breath * height * .005
-      const sky = context.createRadialGradient(moonX, moonY, radius, moonX, moonY, width * .375)
-      sky.addColorStop(0, '#4074aa'); sky.addColorStop(.03, '#2b4d7b'); sky.addColorStop(.1, '#264470'); sky.addColorStop(.2, '#1e365d'); sky.addColorStop(.42, '#121e3a'); sky.addColorStop(1, '#101b36')
+      // The glow sits behind the ASCII moon in the DOM, so read its box instead of duplicating layout numbers here.
+      const anchor = document.getElementById('moon')?.getBoundingClientRect()
+      // Pages without the moon light the sky from just past the top right corner and draw no halo, so there is no glow for a moon that is not there.
+      const radius = anchor ? anchor.width * .5 : width * .09
+      const moonX = anchor ? anchor.left + anchor.width * .5 : width * 1.02
+      const moonY = anchor ? anchor.top + anchor.height * .5 : -height * .15
+      const sky = context.createRadialGradient(moonX, moonY, radius * .6, moonX, moonY, Math.max(width, height) * .6)
+      sky.addColorStop(0, '#34608f'); sky.addColorStop(.05, '#2b4d7b'); sky.addColorStop(.14, '#264470'); sky.addColorStop(.26, '#1e365d'); sky.addColorStop(.5, '#121e3a'); sky.addColorStop(1, '#101b36')
       context.fillStyle = sky; context.fillRect(0, 0, width, height)
       const down = context.createLinearGradient(0, height * .45, 0, height)
       down.addColorStop(0, 'rgba(9,15,30,0)'); down.addColorStop(1, 'rgba(9,15,30,.62)')
@@ -140,42 +137,25 @@ export function Sky() {
       stars.forEach((star) => { context.globalAlpha = .22 * (reduced ? .75 : .3 + (Math.sin(time / 950 * .5 + star.phase) + 1) / 2 * .7); context.beginPath(); context.arc(star.x * width, star.y * height, star.radius, 0, TAU); context.fill() })
       context.globalAlpha = 1
       context.globalCompositeOperation = 'lighter'
-      const halo = context.createRadialGradient(moonX, moonY, radius, moonX, moonY, radius * 3.1)
-      halo.addColorStop(0, `rgba(120,196,230,${.4 + breath * .07})`); halo.addColorStop(.12, 'rgba(88,156,216,.2)'); halo.addColorStop(1, 'rgba(40,74,130,0)')
-      context.fillStyle = halo; context.beginPath(); context.arc(moonX, moonY, radius * 3.1, 0, TAU); context.fill()
+      if (anchor) {
+        const halo = context.createRadialGradient(moonX, moonY, radius * .7, moonX, moonY, radius * 2.6)
+        halo.addColorStop(0, `rgba(120,196,230,${.22 + breath * .04})`); halo.addColorStop(.2, 'rgba(88,156,216,.1)'); halo.addColorStop(1, 'rgba(40,74,130,0)')
+        context.fillStyle = halo; context.beginPath(); context.arc(moonX, moonY, radius * 2.6, 0, TAU); context.fill()
+      }
       context.globalCompositeOperation = 'source-over'
-      context.save(); context.translate(moonX, moonY); context.rotate(time * .0000045); context.drawImage(moon, -radius, -radius, radius * 2, radius * 2); context.restore()
-      context.globalCompositeOperation = 'lighter'
-      const ring = context.createRadialGradient(moonX, moonY, 0, moonX, moonY, radius * 1.5)
-      ring.addColorStop(0, 'rgba(190,236,250,0)')
-      ring.addColorStop(.4, 'rgba(190,236,250,.05)')
-      ring.addColorStop(.56, 'rgba(206,242,252,.15)')
-      ring.addColorStop(.667, `rgba(232,250,254,${.34 + breath * .05})`)
-      ring.addColorStop(.77, 'rgba(176,228,248,.17)')
-      ring.addColorStop(.89, 'rgba(128,198,236,.06)')
-      ring.addColorStop(1, 'rgba(100,175,225,0)')
-      context.fillStyle = ring; context.beginPath(); context.arc(moonX, moonY, radius * 1.5, 0, TAU); context.fill(); context.globalCompositeOperation = 'source-over'
       particles.forEach((particle) => {
         if (!reduced) { particle.y += (.0005 + particle.depth * .00165) * .42; particle.x += (.00055 + particle.depth * .0012) * .42 + Math.sin(time * .00019 + particle.phase) * .00022 * particle.sway; particle.angle += .002 * (.4 + particle.depth) }
         if (particle.y > 1.16) { particle.y = -.16; particle.x = Math.random() * 1.4 - .35 }
         const size = (1.4 + particle.depth * particle.depth * 8)
         context.save(); context.translate(particle.x * width, particle.y * height); context.rotate(particle.angle); context.globalAlpha = .62 - particle.depth * .28; context.fillStyle = particle.depth > .65 ? '#7edcff' : '#fafafb'; drawPetal(context, size); context.fill(); context.restore()
       })
-      const band = (bandHeight: number, bottom = false) => {
-        context.save(); if (bottom) { context.translate(0, height); context.scale(1, -1) }
-        const gradient = context.createLinearGradient(0, 0, 0, bandHeight + 72)
-        gradient.addColorStop(0, '#04070f'); gradient.addColorStop(bandHeight / (bandHeight + 72), '#04070f')
-        for (let step = 1; step <= 10; step += 1) { const point = step / 10; gradient.addColorStop((bandHeight + 72 * point) / (bandHeight + 72), `rgba(4,7,15,${(.5 + .5 * Math.cos(Math.PI * point)).toFixed(3)})`) }
-        context.fillStyle = gradient; context.fillRect(0, 0, width, bandHeight + 72); context.restore()
-      }
-      band(46); band(50, true)
       context.fillStyle = '#fafafb'
       motes.forEach((mote) => {
         if (!reduced) {
           mote.x += mote.speed * (Math.sin(time * .00016) * .35 + .65)
           if (mote.x > width + 4) mote.x = -4
         }
-        const localDepth = Math.max(0, Math.min(1, (mote.y - 46) / 72))
+        const localDepth = Math.max(0, Math.min(1, mote.y / 72))
         const y = mote.top ? mote.y + Math.sin(time * .0004 + mote.phase) * 1.4 : height - mote.y - Math.sin(time * .0004 + mote.phase) * 1.4
         context.globalAlpha = (.54 - localDepth * .4) * (reduced ? 1 : .72 + Math.sin(time * .0006 + mote.phase) * .28)
         context.beginPath(); context.arc(mote.x, y, .3 + (1 - localDepth) * .7, 0, TAU); context.fill()

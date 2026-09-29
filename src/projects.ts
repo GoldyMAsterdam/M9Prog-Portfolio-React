@@ -1,3 +1,10 @@
+import keurveiligImage from './assets/images/keurveilig.jpg'
+import senergyImage from './assets/images/senergy.jpg'
+import michelVisualsImage from './assets/images/michelvisuals-hd.jpg'
+
+// Goldy while developing, real name on the live build.
+export const NAME = import.meta.env.PROD ? 'Tycho' : 'Goldy'
+
 export type Status = 'live' | 'in progress' | 'placeholder'
 
 export type Project = {
@@ -10,18 +17,25 @@ export type Project = {
   url?: string
   summary?: string
   result?: string
+  client?: string
+  shipped?: string
+  hosting?: string
+  image?: string
 }
 
 export const PROJECTS: Project[] = [
   {
     slug: 'keurveilig',
     title: 'Keurveilig',
-    date: '2026-03-21 (Still actively working on)',
+    date: '2026-03-21',
+    shipped: 'March 2026, ongoing',
     role: 'Freelance',
     stack: ['React', 'Tailwind', 'Vite', 'Vercel'],
     status: 'live',
     url: 'https://keurveilig.nl',
-    summary: 'Freelance job. Built and shipped on Vercel.',
+    hosting: 'Vercel',
+    image: keurveiligImage,
+    summary: 'Tool inspection company working across the Netherlands. Site, pricing calculator and quote flow, built and shipped on Vercel. Still actively working on it.',
   },
   {
     slug: 'michelvisuals',
@@ -31,8 +45,23 @@ export const PROJECTS: Project[] = [
     stack: ['React', 'React Router', 'Tailwind', 'Vite', 'Vercel'],
     status: 'live',
     url: 'https://michelvisuals.com',
-    summary:
-      'Freelance job for an editor.',
+    client: 'Michel, videographer, Netherlands',
+    shipped: 'July 2026',
+    hosting: 'Vercel',
+    image: michelVisualsImage,
+    summary: 'A videographer who needed a modern, responsive website to show his work. My design, my build.',
+  },
+  {
+    slug: 'senergy',
+    title: 'Senergy',
+    date: '2025-02-11',
+    role: 'School, duo',
+    stack: ['HTML', 'CSS', 'JavaScript', 'WeatherAPI', 'Arduino'],
+    status: 'live',
+    url: 'https://38436.hosts2.ma-cloud.nl/Senergy/',
+    shipped: 'April 2025',
+    image: senergyImage,
+    summary: 'My first website, built with a classmate. A weather dashboard with live forecasts from WeatherAPI, plus a room temperature page meant to read from an Arduino DHT11 sensor.',
   },
   {
     slug: 'Portfolio',
