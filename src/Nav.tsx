@@ -8,7 +8,6 @@ const LINKS = [
   ['#contact-me', '--contact'],
 ]
 
-// The prompt doubles as the way home: on an inner page it reads as `cd ~`.
 export function Nav({ current }: { current?: string }) {
   return (
     <nav className="m-auto flex max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-1 px-10 pt-8 font-mono text-[0.9rem] text-muted max-lap:px-6 max-phone:px-4" aria-label="Main navigation">
