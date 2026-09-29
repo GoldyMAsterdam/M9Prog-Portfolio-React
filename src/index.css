@@ -80,20 +80,15 @@
   --color-ink: #edf3ff;
   --color-bright: #fafafb;
   --color-muted: #7f8ba6;
-  --color-line: #1e2a4a;
   --color-link: #56a5c2;
   --color-accent: #3db2e3;
   --color-panel: #0c1424;
   --color-glass: rgb(16 27 54 / 0.42);
-  --color-surface: #0a1322;
-  --color-band: #16223c;
   --color-moon: #dff1fb;
   --color-glow: #7edcffaa;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
 
-  --breakpoint-wide: 1180px;
   --breakpoint-lap: 900px;
   --breakpoint-phone: 640px;
 }
@@ -134,7 +129,7 @@
   }
 }
 
-/* Motion, borrowed from Library: short, named properties, ease-out. Nothing bounces. */
+/* animations */
 @keyframes rise {
   from {
     opacity: 0;
@@ -146,16 +141,15 @@
   from { opacity: 0; }
 }
 
-/* Children arrive one after another. `--i` is set by the caller and stays small. */
+/* stagger children by --i */
 .stagger > * {
   animation: rise 420ms var(--ease-out) both;
   animation-delay: calc(var(--i, 0) * 60ms);
 }
 
-/* Route changes: the new page fades up while its children stagger in. */
 .enter { animation: fade-in 260ms var(--ease-out) both; }
 
-/* Links draw their underline from the left instead of snapping it on. */
+/* underline grows from the left */
 .link {
   background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
   transition: background-size 260ms var(--ease-out), color 160ms var(--ease-out);
@@ -167,10 +161,7 @@
 a:hover .arrow, a:focus-visible .arrow { transform: translateX(3px); }
 a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px); }
 
-/*
- * A screenshot catching the moonlight as the pointer crosses it: one band, one
- * pass, pointer only, so a tap never fires it and nothing loops on its own.
- */
+/* light sweep over screenshots on hover */
 @keyframes glint {
   from { transform: translateX(-140%) skewX(-18deg); }
   to { transform: translateX(240%) skewX(-18deg); }
@@ -195,16 +186,7 @@ a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px)
   .lift:hover .shot::after, .lift:focus-visible .shot::after { animation: glint 900ms var(--ease-out); }
 }
 
-/* Panels get a rim that brightens under the pointer instead of a shadow. */
-.lift { transition: border-color 220ms var(--ease-out), background-color 220ms var(--ease-out); }
-.lift:hover, .lift:focus-within { border-color: color-mix(in oklab, var(--color-link) 55%, var(--color-line)); }
-
-/*
- * Glass, from Loom's glass look: the sky stays behind the whole page and the
- * content floats over it on frost. A translucent fill carries legibility, the
- * blur is what makes it glass, and the rim (a hairline all round, brighter
- * along the top where the moonlight hits) tells it apart from a grey box.
- */
+/* frosted glass */
 .glass {
   background-color: var(--color-glass);
   backdrop-filter: blur(24px) saturate(140%);
@@ -218,7 +200,7 @@ a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px)
   .glass { background-color: var(--color-panel); }
 }
 
-/* Pills: glass that brightens its fill and rim under the pointer. */
+/* pill hover */
 .pill {
   transition-property: color, background-color, box-shadow;
   transition-duration: 150ms;

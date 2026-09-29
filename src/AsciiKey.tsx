@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { NAME } from './projects'
 
-// Same ramp as the moon, so both read as one set of drawings.
 const RAMP = ' .:;+ox#%@'
 const COLS = 56
 const ROWS = 30
-// A monospace cell is about 0.6 of its line height wide; this keeps the key square.
+// mono chars are ~0.6 as wide as they are tall
 const CELL = 0.6
 
-// 5 x 7 capitals, only the letters the name can start with.
+// 5x7 pixel letters
 const GLYPHS: Record<string, string[]> = {
   G: ['01110', '10001', '10000', '10111', '10001', '10001', '01110'],
   T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
@@ -16,7 +15,7 @@ const GLYPHS: Record<string, string[]> = {
 
 type Vec = [number, number, number]
 
-// A keycap: a rounded box that narrows towards the top.
+// rounded box that gets narrower at the top
 function keycap(x: number, y: number, z: number) {
   const taper = 1 - 0.14 * Math.min(1, Math.max(0, (y + 0.5) / 1))
   const qx = Math.abs(x / taper) - 0.78
@@ -29,7 +28,6 @@ function keycap(x: number, y: number, z: number) {
 function render(turn: number, letter: string[]) {
   const tilt = -0.62
   const [cy, sy, ct, st] = [Math.cos(turn), Math.sin(turn), Math.cos(tilt), Math.sin(tilt)]
-  // View space to key space: undo the tilt, then the turn.
   const toKey = ([x, y, z]: Vec): Vec => {
     const y1 = y * ct + z * st
     const z1 = -y * st + z * ct
@@ -61,7 +59,7 @@ function render(turn: number, letter: string[]) {
       const length = Math.hypot(...n) || 1
       const lambert = Math.max(0, (n[0] * light[0] + n[1] * light[1] + n[2] * light[2]) / length / Math.hypot(...light))
       let tone = 0.12 + lambert * 0.88
-      // The letter is printed on the top face: find where this point sits on it in key space.
+      // letter on the top face
       const [kx, ky, kz] = toKey(p)
       if (ky > 0.3) {
         const gx = Math.floor((kx + 0.42) / 0.84 * 5)
@@ -75,7 +73,6 @@ function render(turn: number, letter: string[]) {
   return out
 }
 
-// A keycap with the first letter of my name, drawn in the same glyphs as the moon.
 export function AsciiKey({ className = '' }: { className?: string }) {
   const letter = GLYPHS[NAME[0]] ?? GLYPHS.G
   const [text, setText] = useState(() => render(0.3, letter))
@@ -83,7 +80,6 @@ export function AsciiKey({ className = '' }: { className?: string }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const start = performance.now()
-    // Sways a little either side instead of spinning, so the letter never turns away far enough to be unreadable.
     const timer = window.setInterval(() => setText(render(0.3 + Math.sin((performance.now() - start) * 0.0004) * 0.4, letter)), 120)
     return () => window.clearInterval(timer)
   }, [letter])

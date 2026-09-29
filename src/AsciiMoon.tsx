@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { moonTexture } from './Sky'
 
-// Light to dense. On a dark sky the brightest parts of the moon get the heaviest glyphs.
 const RAMP = ' .:;+ox#%@'
 const COLS = 52
-// A monospace cell is about 0.6em wide on a 1em line, so this many rows keeps the disc round.
+// mono chars are ~0.6 as wide as they are tall
 const ROWS = Math.round(COLS * 0.6)
 const SIZE = 224
 
@@ -17,7 +16,7 @@ function render(pixels: Uint8ClampedArray, angle: number) {
     for (let col = 0; col < COLS; col += 1) {
       let tone = 0
       let alpha = 0
-      // 2x2 samples per cell so single noisy pixels do not flip a glyph.
+      // 2x2 samples per char
       for (let sy = 0; sy < 2; sy += 1) {
         for (let sx = 0; sx < 2; sx += 1) {
           const nx = ((col + (sx + 0.5) / 2) / COLS) * 2 - 1
@@ -46,7 +45,6 @@ export function AsciiMoon({ className = '' }: { className?: string }) {
 
   useEffect(() => {
     if (!pixels || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    // One slow turn every ~7 minutes, redrawn a few times a second: the glyphs shimmer instead of sliding.
     const start = performance.now()
     const timer = window.setInterval(() => setText(render(pixels, (performance.now() - start) * 0.000015)), 250)
     return () => window.clearInterval(timer)

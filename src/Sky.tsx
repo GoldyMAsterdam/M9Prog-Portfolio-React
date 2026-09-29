@@ -121,9 +121,9 @@ export function Sky() {
 
     const draw = (time: number) => {
       const breath = reduced ? 0 : Math.sin(time * .000055)
-      // The glow sits behind the ASCII moon in the DOM, so read its box instead of duplicating layout numbers here.
+      // glow follows the ascii moon
       const anchor = document.getElementById('moon')?.getBoundingClientRect()
-      // Pages without the moon light the sky from just past the top right corner and draw no halo, so there is no glow for a moon that is not there.
+      // no moon on this page: light from the top right, no halo
       const radius = anchor ? anchor.width * .5 : width * .09
       const moonX = anchor ? anchor.left + anchor.width * .5 : width * 1.02
       const moonY = anchor ? anchor.top + anchor.height * .5 : -height * .15

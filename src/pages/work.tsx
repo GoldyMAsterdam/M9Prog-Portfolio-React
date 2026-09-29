@@ -5,7 +5,6 @@ import { PROJECTS, month, type Project } from '../projects'
 const focus = 'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent'
 const mono = 'font-mono text-[0.72rem] tracking-[0.08em] uppercase'
 
-// Every project in the same two-up grid the home page uses, so the list reads as the full version of that section.
 export default function Work() {
   return (
     <>

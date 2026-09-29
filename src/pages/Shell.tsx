@@ -1,6 +1,5 @@
 import { pageTitle } from '../Nav'
 
-// Inner pages sit straight on the sky like the home page: a mono title, then the content, no box.
 export default function Shell({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
     <article>
