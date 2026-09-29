@@ -32,8 +32,49 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./assets/fonts/PPNeueMontreal-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./assets/fonts/PPNeueMontreal-Extrabold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal Mono";
+  src: url("./assets/fonts/PPNeueMontrealMono-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal Mono";
+  src: url("./assets/fonts/PPNeueMontrealMono-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal Mono";
+  src: url("./assets/fonts/PPNeueMontrealMono-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --font-body: "PP Neue Montreal", "Segoe UI", sans-serif;
+  --font-mono: "PP Neue Montreal Mono", ui-monospace, Consolas, monospace;
 
   --color-bg: #040812;
   --color-ink: #edf3ff;
@@ -43,8 +84,14 @@
   --color-link: #56a5c2;
   --color-accent: #3db2e3;
   --color-panel: #0c1424;
+  --color-glass: rgb(16 27 54 / 0.42);
   --color-surface: #0a1322;
   --color-band: #16223c;
+  --color-moon: #dff1fb;
+  --color-glow: #7edcffaa;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
 
   --breakpoint-wide: 1180px;
   --breakpoint-lap: 900px;
@@ -76,6 +123,9 @@
     body { font-size: 16px; }
   }
 
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -83,3 +133,103 @@
     }
   }
 }
+
+/* Motion, borrowed from Library: short, named properties, ease-out. Nothing bounces. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* Children arrive one after another. `--i` is set by the caller and stays small. */
+.stagger > * {
+  animation: rise 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+/* Route changes: the new page fades up while its children stagger in. */
+.enter { animation: fade-in 260ms var(--ease-out) both; }
+
+/* Links draw their underline from the left instead of snapping it on. */
+.link {
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  transition: background-size 260ms var(--ease-out), color 160ms var(--ease-out);
+}
+
+.link:hover, .link:focus-visible, .link[aria-current="page"] { background-size: 100% 1px; }
+
+.arrow { display: inline-block; transition: transform 220ms var(--ease-out); }
+a:hover .arrow, a:focus-visible .arrow { transform: translateX(3px); }
+a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px); }
+
+/*
+ * A screenshot catching the moonlight as the pointer crosses it: one band, one
+ * pass, pointer only, so a tap never fires it and nothing loops on its own.
+ */
+@keyframes glint {
+  from { transform: translateX(-140%) skewX(-18deg); }
+  to { transform: translateX(240%) skewX(-18deg); }
+}
+
+.shot { overflow: hidden; }
+
+.shot img { transition: transform 700ms var(--ease-out); }
+
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-moon) 22%, transparent), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .lift:hover .shot img, .lift:focus-visible .shot img { transform: scale(1.025); }
+  .lift:hover .shot::after, .lift:focus-visible .shot::after { animation: glint 900ms var(--ease-out); }
+}
+
+/* Panels get a rim that brightens under the pointer instead of a shadow. */
+.lift { transition: border-color 220ms var(--ease-out), background-color 220ms var(--ease-out); }
+.lift:hover, .lift:focus-within { border-color: color-mix(in oklab, var(--color-link) 55%, var(--color-line)); }
+
+/*
+ * Glass, from Loom's glass look: the sky stays behind the whole page and the
+ * content floats over it on frost. A translucent fill carries legibility, the
+ * blur is what makes it glass, and the rim (a hairline all round, brighter
+ * along the top where the moonlight hits) tells it apart from a grey box.
+ */
+.glass {
+  background-color: var(--color-glass);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    inset 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background-color: var(--color-panel); }
+}
+
+/* Pills: glass that brightens its fill and rim under the pointer. */
+.pill {
+  transition-property: color, background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.pill:hover {
+  background-color: rgb(255 255 255 / 0.11);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.pill:active { background-color: rgb(255 255 255 / 0.15); }
