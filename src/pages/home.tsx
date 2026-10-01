@@ -45,7 +45,8 @@ export default function Home() {
               I'm {NAME}, 18. I study software development at MediaCollege Amsterdam, and next to school I build websites for clients.
             </p>
             <p className="m-0 mt-6 max-w-[56ch] text-[1.05rem]/[1.75] text-ink">
-              For KeurVeilig, a tool inspection company working across the Netherlands, I built the site, the price calculator and the quote flow, and I still work on it. For Michel Visuals, a videographer, I designed and built a site to show his work.
+              KeurVeilig: a tool inspection company working across the Netherlands, I built the site, the price calculator and the quote flow, and the site is still in ongoing development. 
+              For Michel Visuals, a videographer, I designed and built a site to show his work.
             </p>
           </div>
         </section>
@@ -75,7 +76,7 @@ export default function Home() {
                     </p>
                     <h3 className="m-0 mt-3 font-mono text-[clamp(1.6rem,1.6vw+0.9rem,2.5rem)]/[1.05] font-bold tracking-[-0.03em] text-bright uppercase [overflow-wrap:anywhere]">{project.title}</h3>
                     <p className="m-0 mt-4 max-w-[52ch] text-[1rem]/[1.7] text-ink">{project.summary}</p>
-                    <p className={`m-0 mt-4 text-muted ${mono}`}>{project.stack.join(' · ')}</p>
+                    <p className={`m-0 mt-4 text-muted ${mono}`}>{project.stack.join(' - ')}</p>
                     <a className={`glass pill mt-6 inline-flex items-center gap-2 rounded-full py-3 pr-4 pl-5 font-mono text-[0.85rem]/[1] whitespace-nowrap text-ink no-underline ${focus}`} href={project.url} target="_blank" rel="noreferrer">
                       Visit site
                       <ArrowUpRight className="arrow out size-4" strokeWidth={2} aria-hidden="true" />

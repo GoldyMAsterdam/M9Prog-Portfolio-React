@@ -5,20 +5,42 @@ type ContributionDay = { contributionCount: number; date: string };
 type Week = { contributionDays: ContributionDay[] };
 type ContributionCalendar = { totalContributions: number; weeks: Week[] };
 
+function getContributionColor(count:number) {
+    if (count === 0) return 'rgb(255 255 255 / 0.11)';
+    if (count < 2) return '#0e4429';
+    if (count < 5) return '#006d32';
+    if (count < 9) return '#26a641';
+    return '#39d353';
+}
+
+function formatDay(date: string) {
+    return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
 export default function Github() {
     const [data, setData] = useState<ContributionCalendar | null>(null);
     const [error, setError] = useState<string | null>(null);
     
+    const [year, setYear] = useState(2026);
+    const years = [2026, 2025, 2024];
+
     useEffect(() => {
-        fetch('/api/github')
+        fetch(`/api/github?year=${year}`)
         .then(async (res) => {
-            const body = await res.json();
-            if (!res.ok) throw new Error(body.error ?? `GitHub API returned ${res.status}`);
-            return body;
+            const text = await res.text();
+            if (!res.ok) { 
+                    throw new Error(`Github API returned ${res.status}: ${text.slice(0, 200)}`);
+            }
+            
+            try {
+            return JSON.parse(text) as ContributionCalendar;
+            } catch {
+                throw new Error(`Expected JSON from Github API, received: ${text.slice(0, 200)}`);
+            }
         })
         .then(setData)
         .catch((err) => setError(err.message));
-    }, []);
+    }, [year]);
 
     if (error) return <div>Something went wrong {error}</div>;
     if (!data) return<div>Loading...</div>;
@@ -26,17 +48,42 @@ export default function Github() {
     return (
     <Shell title="GitHub">
         <div>
-            <h1 className="text-xl font-bold">{data.totalContributions} contributions this year</h1>
-            <div className="flex gap-0.5 mt-4">
+            <img
+            src="https://github.com/GoldyMAsterdam.png?size=160"
+            alt="Github Profile Picture"
+            className="mx-auto block rounded-full object-cover"
+            />
+        </div>
+        <div>
+            <h1 className="text-xl mt-10 font-bold text-center content-center">{data.totalContributions} contributions in {year}</h1>
+            <div className="flex flex-row justify-center">
+            {years.map((y) => (
+                <button
+                    key={y}
+                    onClick={() => setYear(y)}
+                    className="pill mx-2 mt-4 rounded-full bg-bright px-4 py-2 font-mono text-[0.85rem]/[1] text-bg transition-colors duration-150 active:bg-link"
+                    >
+                    {y}
+                </button>
+            ))}
+            </div>
+            <div
+                className="mx-auto mt-4 grid max-w-5xl gap-0.5"
+                style={{ gridTemplateColumns: `repeat(${data.weeks.length}, minmax(0, 1fr))` }}
+            >
                 {data.weeks.map((week, i) => (
                 <div key={i} className="flex flex-col gap-0.5">
                     {week.contributionDays.map((day) => (
                     <div
                         key={day.date}
                         title={`${day.date}: ${day.contributionCount}`}
-                        className="w-2.5 h-2.5 rounded-sm"
-                        style={{ background: day.contributionCount > 0 ? '#39d353' : '#161b22' }}
-                    />
+                        className="group relative aspect-square w-full rounded-sm"
+                        style={{ backgroundColor: getContributionColor(day.contributionCount) }}
+                    >
+                        <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                        {day.contributionCount} contributions on {formatDay(day.date)}
+                        </span>
+                    </div>
                     ))}
                 </div>
                 ))}

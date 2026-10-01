@@ -3,16 +3,16 @@ import { NAME } from './projects'
 const focus = 'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent'
 
 const LINKS = [
-  ['#work', '--work'],
-  ['#about-me', '--about'],
-  ['#contact-me', '--contact'],
+  ['#work', 'work'],
+  ['#about-me', 'about'],
+  ['#contact-me', 'contact'],
 ]
 
 export function Nav({ current }: { current?: string }) {
   return (
     <nav className="m-auto flex max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-1 px-10 pt-8 font-mono text-[0.9rem] text-muted max-lap:px-6 max-phone:px-4" aria-label="Main navigation">
       <a className={`no-underline text-muted hover:text-accent active:text-link ${focus}`} href="#home">
-        ~/{NAME.toLowerCase()} $<span className="sr-only"> home</span>
+        {NAME.toUpperCase()} -<span className="sr-only"> home</span>
       </a>
       <ul className="m-0 flex list-none flex-wrap gap-x-4 p-0">
         {LINKS.map(([href, label]) => (

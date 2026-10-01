@@ -1,7 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-export default async function handler(_req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   const token = process.env.GITHUB_TOKEN;
+
+  const year = Number(req.query.year);
+  const currentYear = new Date().getFullYear();
+
+  if (!Number.isInteger(year) || year < 2008 || year > currentYear) {
+    res.status(400).json({ error: 'Invalid year'});
+    return;
+  }
+
+  const from = `${year}-01-01T00:00:00Z`;
+  const to = `${year}-12-31T23:59:59Z`;
 
   if (!token) {
     res.status(500).json({ error: 'GITHUB_TOKEN is not configured' });
@@ -9,9 +20,9 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
   }
 
   const query = `
-    query($userName: String!) {
+    query($userName: String!, $from: DateTime, $to: DateTime) {
       user(login: $userName) {
-        contributionsCollection {
+        contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
             weeks {
@@ -34,7 +45,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     },
     body: JSON.stringify({
       query,
-      variables: { userName: 'GoldyMAsterdam' },
+      variables: { userName: 'GoldyMAsterdam', from, to },
     }),
   });
 
