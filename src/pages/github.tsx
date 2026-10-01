@@ -1,5 +1,5 @@
 import Shell from './Shell'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 type ContributionDay = { contributionCount: number; date: string };
 type Week = { contributionDays: ContributionDay[] };
@@ -26,7 +26,14 @@ export default function Github() {
 
     const [loading, setLoading] = useState(false);
 
+    const cache = useRef<Record<number, ContributionCalendar>>({});
+
     useEffect(() => {
+        const cached = cache.current[year];
+         if (cached) {
+            setData(cached);
+            return;
+        }
         setLoading(true);
         fetch(`/api/github?year=${year}`)
         .then(async (res) => {
@@ -41,7 +48,10 @@ export default function Github() {
                 throw new Error(`Expected JSON from Github API, received: ${text.slice(0, 200)}`);
             }
         })
-        .then(setData)
+        .then((result) => {
+            cache.current[year] = result;
+            setData(result);
+        })
         .catch((err) => setError(err.message))
         .finally(() => setLoading(false));
     }, [year]);
