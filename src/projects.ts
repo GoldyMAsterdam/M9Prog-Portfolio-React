@@ -2,7 +2,6 @@ import keurveiligImage from './assets/images/keurveilig.jpg'
 import senergyImage from './assets/images/senergy.jpg'
 import michelVisualsImage from './assets/images/michelvisuals-hd.jpg'
 
-// real name on the live site
 export const NAME = import.meta.env.PROD ? 'Tycho' : 'Goldy'
 
 export type Status = 'live' | 'in progress' | 'placeholder'

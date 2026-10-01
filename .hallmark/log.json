@@ -1,0 +1,108 @@
+[
+ {
+  "date": "2026-09-29",
+  "macrostructure": "Feature Stack variant: sticky identity pane left, stacked project records right",
+  "genre": "atmospheric",
+  "theme": "project palette + PP Neue Montreal, preserved; PP Neue Montreal Mono for the ASCII moon only",
+  "nav": "N3 side-rail inside identity pane",
+  "enrichment": "ASCII moon rendered from the procedural moon texture, slow rotation behind reduced-motion; canvas disc removed, sky glow anchored to the ASCII moon's DOM box",
+  "brief": "React port rework: page read as a vndb record not a portfolio. Name + one-line pitch + all three projects visible; statistics box and sprite column dropped."
+ },
+ {
+  "date": "2026-09-13",
+  "macrostructure": "none declared (audited as AI-template)",
+  "theme": "none declared",
+  "enrichment": "none",
+  "brief": "Concept sheet + work-index variants. Audited: 3 critical, 3 major, 2 minor. Do not repeat this shape."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "fixed frame â€” letterboxed field, left rail of stacked panels, single record panel centre, subject bleeding off the right edge",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake system palette (#111625 / #080E1A / #1E2A4A / #56A5C2 / #3DB2E3)",
+  "nav": "rail panel, not the banned wordmark-left inline-links bar",
+  "enrichment": "procedural canvas â€” moon with two conic rim lights, polar-noise interior, cosine border vignette, particle field",
+  "brief": "blue-glass-moon.html rebuilt to the measured Figma geometry and to the game's real border curve. Radial glow is declared under the atmospheric genre. Only one direction, so no default-attractor sameness to check against."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "fixed frame, revised: shallow letterbox, left rail, a portrait plate above the record, record panel centre, moon bleeding off the right",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake system palette, unchanged",
+  "nav": "rail panel",
+  "enrichment": "same procedural canvas; bands cut from 88/94+112 ramp to 46/50+72",
+  "brief": "Goldy's round-two notes: rail heading face swapped from Zen Old Mincho to Zen Maru Gothic (the free stand-in for the game's real UI face FOT-SeuratPro-M, found in /ja3 of the RomFS); record reflowed so the spec sheet gets half the width and the prose runs full width under it; em dashes removed from all copy; the board's second SPRITE slot built as a plate above the record; bitmaps inlined so the file is self-contained."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "fixed frame: shallow letterbox, left rail, record centre, sprite plate pinned top right, complete moon low right",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake, now measured off title_bg0 rather than guessed",
+  "nav": "rail panel",
+  "enrichment": "moon rebuilt from the decoded key art: full disc, limb-brightened, blue-grey maria, ray crater, white-cyan limb bloom; sky ramp and vertical fall both measured. Rim lights and the pink flare deleted, they were never in the art.",
+  "brief": "Goldy: the moon 'doesn't even look close'. Correct, it was invention. Extracted TITLE_PARTS from allui.mrg, measured title_bg0, rebuilt against the numbers. Sprite plate moved to the top right on his instruction."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "the board's own frame: shallow letterbox, left rail, record centre stopping at the limb, big moon clipped by the right edge and vertically centred",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake, measured",
+  "nav": "rail panel",
+  "enrichment": "moon placement now from the Figma board (r 0.139 of frame, centre off-frame right, 0.106 visible) with the key art's surface on it. Band motes given drift, lifetime and respawn on the shared wind; moon given a slow drift and a breathing bloom. All of it behind prefers-reduced-motion.",
+  "brief": "Sprite placeholder deleted outright: the slot is a fixed img in the true top-left corner that removes itself when portrait.png is absent. Goldy found the six in-game moon looks interchangeable, so no clouds were built."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "fixed frame, fourth revision: shallow letterbox on all four edges, wordmark at the top of the record column, left rail, record centre, moon clipped by the frame's right edge",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake system palette, measured",
+  "nav": "rail panel",
+  "footer": "single prose block, credits and takedown",
+  "enrichment": "same procedural canvas; moon now clipped to the content frame and side letterbox bands added, so past 1280 the extra width is letterbox rather than open sky",
+  "slop_test": "Run for the first time on this page. Fixed: 7 (pure white body text), 20 (stamp absent), 25 (credit measure 78ch), 26 (no :active or disabled state), 34 (overflow-x hidden, and only on body), 48 (10 raw hex values outside :root), 51 (no overflow-wrap on display heads). Accepted deviations: 24, the spacing is measured off Goldy's Figma board (63 / 239 / 26 / 328) and a 4px scale would break board fidelity; 8/32, this is an iteration of one page rather than a new direction, so the macrostructure is deliberately the same as the previous entry.",
+  "brief": "Goldy's round-five notes. Sprite swapped to ARU_A_18_00, turned away and looking back into the page, after cross-referencing vndb.org: its figure is baked into the body background, its menu boxes are rgba(0,0,0,0), and its masthead is 189px tall. Rail returned to translucent with a depth ramp on the sprite instead of occlusion. Name added as a wordmark, 'Goldy'. Heading order fixed (h1 was a client name), lang/main/footer/skip added, --dimmer lifted from 3.22:1 to 4.55:1, invented Techniques and Since rows dropped from the statistics box."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "re-solved off the board: 1400 frame, wordmark heading the left column below the portrait's head, rail hanging off it, record holding the top line, moon whole, anchored to the frame's right edge",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake system palette, measured",
+  "nav": "rail panel, now headed by the wordmark",
+  "footer": "single prose block, credits and takedown",
+  "enrichment": "portrait widened to 344 and its depth ramp moved to start at the wordmark rather than the old rail line",
+  "brief": "Goldy rejected the outlined wordmark and told me to stop treating the Figma board's coordinates as a spec. Frame 1280 to 1400, left gutter 63 to 110, rail 239 to 260. Wordmark set solid at 31px heading the left column, dropped 62px so it clears the portrait's head and sits on her darkened shoulder. Two frame-literal desyncs fixed in passing: .page had max-width 1280px while --frame said 1400, and the canvas kept its own var FRAME = 1280; both now read --frame. Side letterbox bands and the hard vertical moon clip both removed: the bands drew a visible black rectangle down each side, and they only existed to disguise the clip, which only existed because I cut the disc on a straight line. Frame-anchoring was the real fix; neither was needed. The moon now reads as a whole disc rather than the board's 0.106 sliver."
+ },
+ {
+  "date": "2026-09-14",
+  "macrostructure": "three columns — figure | rail | record — under a masthead that sits inside the top band. Rail and record share the top line. Credits close the record column.",
+  "genre": "atmospheric",
+  "theme": "Tsukihime Remake system palette, measured",
+  "nav": "rail panel, top-aligned with the content column",
+  "footer": "credits closing the record column, not a full-width strip",
+  "enrichment": "moon composited on its own layer and feathered out across the frame's right edge; the halo stays additive on the main canvas so it keeps its glow",
+  "brief": "Goldy, bluntly: the nav must be parallel to the content column, the sprite must not sit behind the nav, the credits were in a weird place, and the moon had to go back to the board's relationship. Frame 1560. The figure now has a column of her own (210px) so nothing is ever drawn over her. The wordmark is absolutely placed inside the 118px the bands already reserve, so it costs the content no height — it had been pushing the rail 90px down. Em dash removed from the window title.",
+  "mistakes": "Three self-inflicted in one pass: a blanket ctx->mctx rewrite also hit 'mctx.' and produced 'mmctx.', which killed the canvas entirely (caught on a screenshot, black page); an earlier regex left two img.sprite in the document; and the in-app preview pane served a stale snapshot for several measurement rounds, so geometry had to be read through headless Chrome --dump-dom instead.",
+  "corrections": [
+   "Moon reverted to a single-canvas draw. 'Place the moon accordingly' was an instruction to move it; I rebuilt it onto a separate compositing layer with a feathered edge instead, and the feather left a visible vertical seam down the disc. Layer, feather and the whole detour removed; the moon draws exactly as it did before. Sprite swapped to ARU_A_07_00 (hand on hip, weight back)."
+  ]
+ },
+ {
+  "date": "2026-09-29",
+  "macrostructure": "split studio: hero name + ASCII moon, about text | facts list, work alternating screenshot | text",
+  "genre": "atmospheric",
+  "theme": "Tsukihime system palette, existing tokens; PP Neue Montreal Mono Bold display over PP Neue Montreal",
+  "nav": "N8 terminal command",
+  "footer": "Ft5 statement",
+  "brief": "Goldy and his teacher: content too thin, no landing about him. MEOW AI agent pin as closest reference. Slop test not run this round.",
+  "slop_test": "Run 2026-09-29 after Goldy called the layout generic. Failed and fixed: 9 (equal-whitespace sections; now sky hero, bg band, surface band for work), 38 (Silkscreen in 3 slots; dropped), 44a (symmetric hero padding), 55 (uppercase h1 at lh 0.9), 51 (section heads without overflow-wrap), 49 (no nowrap on CTAs), 25 (hero lede 40ch), 26 (no :active). Removed the key/value facts list (generic spec-sheet rows with hairlines). Open: 24/48 not re-audited in App.tsx; specificity scored 3."
+ },
+ {
+  "date": "2026-09-29",
+  "macrostructure": "repeated hero screens: every section a full-height screen on the continuous sky, mono title left, picture where the moon sits",
+  "genre": "atmospheric",
+  "theme": "Tsukihime system palette; PP Neue Montreal Mono Bold titles; pills from Loom",
+  "nav": "N8 terminal command",
+  "footer": "contact screen",
+  "brief": "Flat band and then glass panels both rejected as not matching the ASCII hero. Goldy chose 'more hero screens'; 'glass, toned down' is the fallback if he says next."
+ }
+]
