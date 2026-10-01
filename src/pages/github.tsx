@@ -24,7 +24,10 @@ export default function Github() {
     const [year, setYear] = useState(2026);
     const years = [2026, 2025, 2024];
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
+        setLoading(true);
         fetch(`/api/github?year=${year}`)
         .then(async (res) => {
             const text = await res.text();
@@ -39,7 +42,8 @@ export default function Github() {
             }
         })
         .then(setData)
-        .catch((err) => setError(err.message));
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false));
     }, [year]);
 
     if (error) return <div>Something went wrong {error}</div>;
@@ -68,7 +72,8 @@ export default function Github() {
             ))}
             </div>
             <div
-                className="mx-auto mt-4 grid max-w-5xl gap-0.5"
+                className={`mx-auto mt-4 grid max-w-5xl gap-0.5 transition-opacity ${loading ? 'opacity-50' : ''}`}
+                aria-busy={loading}
                 style={{ gridTemplateColumns: `repeat(${data.weeks.length}, minmax(0, 1fr))` }}
             >
                 {data.weeks.map((week, i) => (
@@ -80,7 +85,7 @@ export default function Github() {
                         className="group relative aspect-square w-full rounded-sm"
                         style={{ backgroundColor: getContributionColor(day.contributionCount) }}
                     >
-                        <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                        <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100">
                         {day.contributionCount} contributions on {formatDay(day.date)}
                         </span>
                     </div>
