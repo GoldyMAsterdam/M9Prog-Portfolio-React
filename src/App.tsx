@@ -12,7 +12,7 @@ const ROUTES = { work: Work, about: About, github: Github, contact: Contact }
 type Route = keyof typeof ROUTES | 'home'
 
 // These ids are sections on the home page
-const HOME_SECTIONS = ['about-me', 'contact-me']
+const HOME_SECTIONS = ['my-work', 'about-me', 'contact-me']
 
 function routeFromHash(): Route | null {
   const hash = window.location.hash.slice(1)
@@ -65,7 +65,7 @@ export default function App() {
       <Sky />
       {skip}
       <div className="relative z-[1]">
-        <Nav current={`#${route}`} />
+        <Nav />
         <main id="content" className="m-auto min-h-[calc(100svh-4rem)] max-w-[1400px] px-10 pt-24 pb-24 max-lap:px-6 max-lap:pt-16 max-phone:px-4">
           <div key={route} className="enter">
             <Page />

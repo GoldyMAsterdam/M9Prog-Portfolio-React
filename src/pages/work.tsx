@@ -24,7 +24,7 @@ function Entry({ project }: { project: Project }) {
       {project.image && (
         <a className={`block ${focus}`} href={project.url} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden="true">
           <figure className="shot relative m-0 aspect-video rounded-3xl bg-panel max-phone:rounded-2xl">
-            <img className="block h-full w-full object-cover" src={project.image} alt="" />
+            <img className="block h-full w-full object-cover select-none" draggable={false} src={project.image} alt="" />
           </figure>
         </a>
       )}

@@ -159,7 +159,9 @@
 
 .arrow { display: inline-block; transition: transform 220ms var(--ease-out); }
 a:hover .arrow, a:focus-visible .arrow { transform: translateX(3px); }
-a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px); }
+/* outgoing arrows stay put and brighten, a diagonal jump knocks them off the text line */
+.arrow.out { opacity: 0.6; transition: opacity 150ms ease-out; }
+a:hover .arrow.out, a:focus-visible .arrow.out { transform: none; opacity: 1; }
 
 /* light sweep over screenshots on hover */
 @keyframes glint {
@@ -200,8 +202,18 @@ a:hover .arrow.out, a:focus-visible .arrow.out { transform: translate(3px, -3px)
   .glass { background-color: var(--color-panel); }
 }
 
+/* form fields: brighter rim on focus instead of an outline ring */
+.field:focus {
+  outline: none;
+  background-color: rgb(255 255 255 / 0.09);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    inset 0 0 0 1px rgb(255 255 255 / 0.5);
+}
+
 /* pill hover */
 .pill {
+  user-select: none;
   transition-property: color, background-color, box-shadow;
   transition-duration: 150ms;
   transition-timing-function: ease-out;

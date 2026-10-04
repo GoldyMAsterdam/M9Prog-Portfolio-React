@@ -64,6 +64,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
+  // past years barely change, so the edge can keep them for a day
+  const maxAge = year < currentYear ? 86400 : 3600;
+  res.setHeader('Cache-Control', `s-maxage=${maxAge}, stale-while-revalidate=86400`);
   res.status(200).json(calendar);
 }

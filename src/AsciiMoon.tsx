@@ -51,7 +51,7 @@ export function AsciiMoon({ className = '' }: { className?: string }) {
   }, [pixels])
 
   return (
-    <pre id="moon" aria-hidden="true" className={`m-0 w-fit font-mono leading-none text-moon select-none [text-shadow:0_0_6px_var(--color-glow),0_0_22px_var(--color-link)] ${className}`}>
+    <pre id="moon" aria-hidden="true" className={`m-0 w-fit font-mono leading-none text-moon select-none pointer-events-none [text-shadow:0_0_6px_var(--color-glow),0_0_22px_var(--color-link)] ${className}`}>
       {text}
     </pre>
   )

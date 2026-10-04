@@ -1,8 +1,7 @@
 import keurveiligImage from './assets/images/keurveilig.jpg'
-import senergyImage from './assets/images/senergy.jpg'
 import michelVisualsImage from './assets/images/michelvisuals-hd.jpg'
 
-export const NAME = import.meta.env.PROD ? 'Tycho' : 'Goldy'
+export const NAME = 'Tycho'
 
 export type Status = 'live' | 'in progress' | 'placeholder'
 
@@ -49,18 +48,6 @@ export const PROJECTS: Project[] = [
     hosting: 'Vercel',
     image: michelVisualsImage,
     summary: 'A videographer who needed a modern, responsive website to show his work. My design, my build.',
-  },
-  {
-    slug: 'senergy',
-    title: 'Senergy',
-    date: '2025-02-11',
-    role: 'School, duo',
-    stack: ['HTML', 'CSS', 'JavaScript', 'WeatherAPI', 'Arduino'],
-    status: 'live',
-    url: 'https://38436.hosts2.ma-cloud.nl/Senergy/',
-    shipped: 'April 2025',
-    image: senergyImage,
-    summary: 'My first website, built with a classmate. A weather dashboard with live forecasts from WeatherAPI, plus a room temperature page meant to read from an Arduino DHT11 sensor.',
   },
   {
     slug: 'Portfolio',

@@ -2,18 +2,29 @@ import { useEffect, useState } from 'react'
 import { NAME } from './projects'
 
 const RAMP = ' .:;+ox#%@'
-const COLS = 56
-const ROWS = 30
+const COLS = 74
+const ROWS = 40
 // mono chars are ~0.6 as wide as they are tall
 const CELL = 0.6
 
+type Vec = [number, number, number]
+type Glyph = (x: number, y: number) => number
+
 // 5x7 pixel letters
-const GLYPHS: Record<string, string[]> = {
+const BITMAPS: Record<string, string[]> = {
   G: ['01110', '10001', '10000', '10111', '10001', '10001', '01110'],
   T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
 }
 
-type Vec = [number, number, number]
+// distance to the nearest lit pixel on the top face (x right, y away from the viewer),
+// so edges anti-alias instead of whole pixel rows dropping out between text rows
+const PX = 0.13
+function pixelGlyph(rows: string[]): Glyph {
+  const cells: [number, number][] = []
+  rows.forEach((row, r) => [...row].forEach((on, c) => on === '1' && cells.push([(c - 2) * PX, (3 - r) * PX])))
+  return (x, y) => Math.min(...cells.map(([cx, cy]) => Math.max(Math.abs(x - cx), Math.abs(y - cy)) - PX / 2))
+}
+const GLYPHS = Object.fromEntries(Object.entries(BITMAPS).map(([k, rows]) => [k, pixelGlyph(rows)]))
 
 // rounded box that gets narrower at the top
 function keycap(x: number, y: number, z: number) {
@@ -25,8 +36,8 @@ function keycap(x: number, y: number, z: number) {
   return (outside + Math.min(Math.max(qx, qy, qz), 0) - 0.2) * 0.8
 }
 
-function render(turn: number, letter: string[]) {
-  const tilt = -0.62
+function render(turn: number, letter: Glyph) {
+  const tilt = -0.72
   const [cy, sy, ct, st] = [Math.cos(turn), Math.sin(turn), Math.cos(tilt), Math.sin(tilt)]
   const toKey = ([x, y, z]: Vec): Vec => {
     const y1 = y * ct + z * st
@@ -62,9 +73,8 @@ function render(turn: number, letter: string[]) {
       // letter on the top face
       const [kx, ky, kz] = toKey(p)
       if (ky > 0.3) {
-        const gx = Math.floor((kx + 0.42) / 0.84 * 5)
-        const gz = Math.floor((0.55 - kz) / 1.1 * 7)
-        if (letter[gz]?.[gx] === '1') tone *= 0.18
+        const ink = Math.min(1, Math.max(0, 0.5 - (letter(kx, kz) - 0.03) / 0.03))
+        tone *= 1 - 0.82 * ink
       }
       out += RAMP[Math.max(1, Math.min(RAMP.length - 1, Math.round(tone * (RAMP.length - 1))))]
     }
@@ -85,7 +95,7 @@ export function AsciiKey({ className = '' }: { className?: string }) {
   }, [letter])
 
   return (
-    <pre aria-hidden="true" className={`m-0 w-fit font-mono leading-none text-moon select-none [text-shadow:0_0_6px_var(--color-glow)] ${className}`}>
+    <pre aria-hidden="true" className={`m-0 w-fit font-mono leading-none text-moon select-none pointer-events-none [text-shadow:0_0_6px_var(--color-glow)] ${className}`}>
       {text}
     </pre>
   )
