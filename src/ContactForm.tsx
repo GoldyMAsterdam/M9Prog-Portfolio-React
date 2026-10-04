@@ -36,7 +36,7 @@ export default function ContactForm() {
         <span className={label}>Message</span>
         <textarea className={`${field} min-h-40 resize-y`} name="message" required maxLength={5000} />
       </label>
-      {/* honeypot, bots fill it, people never see it */}
+      {/* honeypot */}
       <input className="hidden" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <div className="flex flex-wrap items-center gap-4">
         <button

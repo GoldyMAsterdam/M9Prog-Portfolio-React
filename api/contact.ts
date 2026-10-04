@@ -8,7 +8,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { name, email, message, website } = req.body ?? {};
 
-  // honeypot filled in, pretend it worked
+  // honeypot
   if (website) {
     res.status(200).json({ ok: true });
     return;
@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  // free Resend tier: onboarding@resend.dev can only send to the account's own address
+  // free tier only sends to the account's own address
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },

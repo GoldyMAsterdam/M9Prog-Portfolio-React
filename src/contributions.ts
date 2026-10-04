@@ -1,11 +1,11 @@
-// GitHub contribution data, shared by the GitHub page and the about skyline
+// GitHub contribution data
 export type ContributionDay = { contributionCount: number; date: string };
 export type Week = { contributionDays: ContributionDay[] };
 export type ContributionCalendar = { totalContributions: number; weeks: Week[] };
 
 export const CURRENT_YEAR = new Date().getFullYear();
 
-// lives outside the component so it survives leaving and coming back to the page
+// outside the component so it survives page changes
 const requests: Record<number, Promise<ContributionCalendar>> = {};
 
 export function loadYear(year: number) {
@@ -27,5 +27,5 @@ export function loadYear(year: number) {
         }));
 }
 
-// start fetching the current year as soon as the app loads, not when the page opens
+// start loading when the app starts
 loadYear(CURRENT_YEAR).catch(() => {});

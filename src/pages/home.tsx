@@ -6,7 +6,7 @@ import { pageTitle as title } from '../Nav'
 import { NAME, PROJECTS, month } from '../projects'
 
 const WORK = PROJECTS.filter((project) => project.status === 'live' && project.image)
-// only link to the full work page once it shows more than the home page does
+// only link when the work page has more
 const HAS_MORE = PROJECTS.filter((project) => project.status === 'live').length > WORK.length
 
 const focus = 'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent'

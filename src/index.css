@@ -149,17 +149,9 @@
 
 .enter { animation: fade-in 260ms var(--ease-out) both; }
 
-/* underline grows from the left */
-.link {
-  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
-  transition: background-size 260ms var(--ease-out), color 160ms var(--ease-out);
-}
-
-.link:hover, .link:focus-visible, .link[aria-current="page"] { background-size: 100% 1px; }
-
 .arrow { display: inline-block; transition: transform 220ms var(--ease-out); }
 a:hover .arrow, a:focus-visible .arrow { transform: translateX(3px); }
-/* outgoing arrows stay put and brighten, a diagonal jump knocks them off the text line */
+/* outgoing arrows */
 .arrow.out { opacity: 0.6; transition: opacity 150ms ease-out; }
 a:hover .arrow.out, a:focus-visible .arrow.out { transform: none; opacity: 1; }
 
@@ -202,7 +194,7 @@ a:hover .arrow.out, a:focus-visible .arrow.out { transform: none; opacity: 1; }
   .glass { background-color: var(--color-panel); }
 }
 
-/* form fields: brighter rim on focus instead of an outline ring */
+/* form field focus */
 .field:focus {
   outline: none;
   background-color: rgb(255 255 255 / 0.09);

@@ -1,19 +1,17 @@
 import { Fragment, useEffect, useState } from 'react'
-// the GitHub fetch, real code doing an ordinary job. not a file from api/:
-// vercel dev sends every /api/ request to the functions, so importing one breaks the page
+// not a file from api/, vercel dev sends those requests to the functions
 import source from './contributions.ts?raw'
 
 const COLS = 74
 const ROWS = 40
 
 const LINES = source.split(/\r?\n/).map((line) => line.replace(/\t/g, '  '))
-// open on the fetch, not the types
+// start at the fetch
 const START = Math.max(0, LINES.findIndex((line) => line.startsWith('export function loadYear')))
 
 const LEVELS = ['opacity-35', 'opacity-65', '']
 
-// the source, scrolling, with a band of light moving across it.
-// the text itself stays put: bending it on a character grid tears words apart
+// scrolling source with a light band moving across
 function render(time: number) {
   const scroll = Math.floor(time * 0.7)
   const chars: string[][] = []
@@ -41,7 +39,7 @@ function render(time: number) {
 }
 
 export function AsciiCode({ className = '' }: { className?: string }) {
-  // a still with the light partway across for reduced motion
+  // still frame for reduced motion
   const [time, setTime] = useState(1.2)
 
   useEffect(() => {
