@@ -11,7 +11,7 @@ const ROUTES = { work: Work, about: About, github: Github, contact: Contact }
 
 type Route = keyof typeof ROUTES | 'home'
 
-// These ids are sections on the home page
+// Sections
 const HOME_SECTIONS = ['my-work', 'about-me', 'contact-me']
 
 function routeFromHash(): Route | null {

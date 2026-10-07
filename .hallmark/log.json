@@ -104,5 +104,23 @@
   "nav": "N8 terminal command",
   "footer": "contact screen",
   "brief": "Flat band and then glass panels both rejected as not matching the ASCII hero. Goldy chose 'more hero screens'; 'glass, toned down' is the fallback if he says next."
+ },
+ {
+  "date": "2026-10-04",
+  "macrostructure": "unchanged (one-page landing)",
+  "genre": "atmospheric",
+  "theme": "unchanged",
+  "nav": "N5 floating pill: sticky, top-centred, .glass with .pill items, current page filled bright",
+  "footer": "unchanged",
+  "brief": "Goldy: rework the navigation, I don't like it. Replaced the plain mono link row (stripped N8). GitHub added to the nav, hidden under 640px where the pill would not fit; still reachable from the contact section."
+ },
+ {
+  "date": "2026-10-04",
+  "macrostructure": "one-page landing reordered for recruiters: short hero, work (wide alternating rows) peeking on the first screen, about, contact",
+  "genre": "atmospheric",
+  "theme": "unchanged",
+  "nav": "none on home; inner pages get a single glass back pill (NAME, Lucide ArrowLeft). Replaces the N5 pill from earlier today.",
+  "footer": "unchanged, plus LinkedIn pill",
+  "brief": "Goldy questioned whether a nav is needed and asked for a landing that convinces recruiters. Research: NN/g 57% of attention on the first screen, illusion of completeness, TheLadders 7 s scan, HN hiring threads. Hero line chosen by Goldy. Senergy dropped."
  }
 ]

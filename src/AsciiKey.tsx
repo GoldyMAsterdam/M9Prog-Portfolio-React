@@ -1,0 +1,102 @@
+import { useEffect, useState } from 'react'
+import { NAME } from './projects'
+
+const RAMP = ' .:;+ox#%@'
+const COLS = 74
+const ROWS = 40
+// mono chars are ~0.6 as wide as they are tall
+const CELL = 0.6
+
+type Vec = [number, number, number]
+type Glyph = (x: number, y: number) => number
+
+// 5x7 pixel letters
+const BITMAPS: Record<string, string[]> = {
+  G: ['01110', '10001', '10000', '10111', '10001', '10001', '01110'],
+  T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
+}
+
+// distance to the nearest lit pixel on the top face (x right, y away from the viewer),
+// so edges anti-alias instead of whole pixel rows dropping out between text rows
+const PX = 0.13
+function pixelGlyph(rows: string[]): Glyph {
+  const cells: [number, number][] = []
+  rows.forEach((row, r) => [...row].forEach((on, c) => on === '1' && cells.push([(c - 2) * PX, (3 - r) * PX])))
+  return (x, y) => Math.min(...cells.map(([cx, cy]) => Math.max(Math.abs(x - cx), Math.abs(y - cy)) - PX / 2))
+}
+const GLYPHS = Object.fromEntries(Object.entries(BITMAPS).map(([k, rows]) => [k, pixelGlyph(rows)]))
+
+// rounded box that gets narrower at the top
+function keycap(x: number, y: number, z: number) {
+  const taper = 1 - 0.14 * Math.min(1, Math.max(0, (y + 0.5) / 1))
+  const qx = Math.abs(x / taper) - 0.78
+  const qy = Math.abs(y) - 0.3
+  const qz = Math.abs(z / taper) - 0.78
+  const outside = Math.hypot(Math.max(qx, 0), Math.max(qy, 0), Math.max(qz, 0))
+  return (outside + Math.min(Math.max(qx, qy, qz), 0) - 0.2) * 0.8
+}
+
+function render(turn: number, letter: Glyph) {
+  const tilt = -0.72
+  const [cy, sy, ct, st] = [Math.cos(turn), Math.sin(turn), Math.cos(tilt), Math.sin(tilt)]
+  const toKey = ([x, y, z]: Vec): Vec => {
+    const y1 = y * ct + z * st
+    const z1 = -y * st + z * ct
+    return [x * cy - z1 * sy, y1, x * sy + z1 * cy]
+  }
+  const field = (p: Vec) => keycap(...toKey(p))
+  const light: Vec = [-0.45, 0.75, -0.5]
+  const scale = 1.3
+  let out = ''
+  for (let row = 0; row < ROWS; row += 1) {
+    for (let col = 0; col < COLS; col += 1) {
+      const u = ((col + 0.5) / COLS * 2 - 1) * scale * (COLS * CELL) / ROWS
+      const v = -((row + 0.5) / ROWS * 2 - 1) * scale
+      let z = -3
+      let hit = false
+      for (let step = 0; step < 48 && z < 3; step += 1) {
+        const d = field([u, v, z])
+        if (d < 0.004) { hit = true; break }
+        z += d
+      }
+      if (!hit) { out += ' '; continue }
+      const e = 0.01
+      const p: Vec = [u, v, z]
+      const n: Vec = [
+        field([u + e, v, z]) - field([u - e, v, z]),
+        field([u, v + e, z]) - field([u, v - e, z]),
+        field([u, v, z + e]) - field([u, v, z - e]),
+      ]
+      const length = Math.hypot(...n) || 1
+      const lambert = Math.max(0, (n[0] * light[0] + n[1] * light[1] + n[2] * light[2]) / length / Math.hypot(...light))
+      let tone = 0.12 + lambert * 0.88
+      // letter on the top face
+      const [kx, ky, kz] = toKey(p)
+      if (ky > 0.3) {
+        const ink = Math.min(1, Math.max(0, 0.5 - (letter(kx, kz) - 0.03) / 0.03))
+        tone *= 1 - 0.82 * ink
+      }
+      out += RAMP[Math.max(1, Math.min(RAMP.length - 1, Math.round(tone * (RAMP.length - 1))))]
+    }
+    out += '\n'
+  }
+  return out
+}
+
+export function AsciiKey({ className = '' }: { className?: string }) {
+  const letter = GLYPHS[NAME[0]] ?? GLYPHS.G
+  const [text, setText] = useState(() => render(0.3, letter))
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const start = performance.now()
+    const timer = window.setInterval(() => setText(render(0.3 + Math.sin((performance.now() - start) * 0.0004) * 0.4, letter)), 120)
+    return () => window.clearInterval(timer)
+  }, [letter])
+
+  return (
+    <pre aria-hidden="true" className={`m-0 w-fit font-mono leading-none text-moon select-none pointer-events-none [text-shadow:0_0_6px_var(--color-glow)] ${className}`}>
+      {text}
+    </pre>
+  )
+}

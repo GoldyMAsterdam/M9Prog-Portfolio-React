@@ -1,5 +1,5 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
-import { AsciiCode } from '../AsciiCode'
+import { AsciiKey } from '../AsciiKey'
 import { AsciiMoon } from '../AsciiMoon'
 import ContactForm from '../ContactForm'
 import { pageTitle as title } from '../Nav'
@@ -78,7 +78,7 @@ export default function Home() {
         </section>
 
         <section id="about-me" className={`${wrap} grid grid-cols-12 items-center py-24 max-lap:py-16`} aria-labelledby="about-title">
-          <AsciiCode className="col-span-4 justify-self-center text-[clamp(7px,0.94vh,11px)] max-lap:hidden" />
+          <AsciiKey className="col-span-4 justify-self-center text-[clamp(7px,0.94vh,11px)] max-lap:hidden" />
           <div className="col-span-7 col-start-6 min-w-0 max-lap:col-span-12 max-lap:col-start-1">
             <h2 id="about-title" className={title}>
               About
