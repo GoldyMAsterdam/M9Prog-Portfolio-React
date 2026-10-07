@@ -21,7 +21,6 @@ function monthOf(week: Week) {
     return new Date(week.contributionDays[0].date).toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
 }
 
-// placeholder grid while loading
 const EMPTY_WEEKS: Week[] = Array.from({ length: 53 }, (_, w) => ({
     contributionDays: Array.from({ length: 7 }, (_, d) => ({ contributionCount: 0, date: `empty-${w}-${d}` })),
 }));
@@ -40,7 +39,6 @@ export default function Github() {
         return () => { current = false; };
     }, [year, attempt]);
 
-    // prefetch the other years
     useEffect(() => {
         YEARS.forEach((y) => loadYear(y).catch(() => {}));
     }, []);

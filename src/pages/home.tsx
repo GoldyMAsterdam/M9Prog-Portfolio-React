@@ -6,7 +6,6 @@ import { pageTitle as title } from '../Nav'
 import { NAME, PROJECTS, month } from '../projects'
 
 const WORK = PROJECTS.filter((project) => project.status === 'live' && project.image)
-// only link when the work page has more
 const HAS_MORE = PROJECTS.filter((project) => project.status === 'live').length > WORK.length
 
 const focus = 'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent'
@@ -49,7 +48,6 @@ export default function Home() {
 
           <div className="mt-12 grid gap-y-24 max-lap:gap-y-12">
             {WORK.map((project, index) => {
-              // every other row puts the text left
               const flip = index % 2 === 1
               return (
                 <article key={project.slug} className="lift grid min-w-0 grid-cols-12 items-end gap-x-10 gap-y-8 max-lap:grid-cols-1">

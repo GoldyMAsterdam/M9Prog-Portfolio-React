@@ -11,7 +11,6 @@ const ROUTES = { work: Work, about: About, github: Github, contact: Contact }
 
 type Route = keyof typeof ROUTES | 'home'
 
-// Sections
 const HOME_SECTIONS = ['my-work', 'about-me', 'contact-me']
 
 function routeFromHash(): Route | null {
@@ -28,7 +27,6 @@ export default function App() {
       const next = routeFromHash()
       if (!next) return
       setRoute(next)
-      // wait a frame so the home page is mounted before scrolling
       requestAnimationFrame(() => {
         const target = document.getElementById(window.location.hash.slice(1))
         if (target && HOME_SECTIONS.includes(target.id)) target.scrollIntoView()

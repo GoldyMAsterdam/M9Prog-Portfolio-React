@@ -3,7 +3,6 @@ import { moonTexture } from './Sky'
 
 const RAMP = ' .:;+ox#%@'
 const COLS = 52
-// mono chars are ~0.6 as wide as they are tall
 const ROWS = Math.round(COLS * 0.6)
 const SIZE = 224
 
@@ -16,7 +15,6 @@ function render(pixels: Uint8ClampedArray, angle: number) {
     for (let col = 0; col < COLS; col += 1) {
       let tone = 0
       let alpha = 0
-      // 2x2 samples per char
       for (let sy = 0; sy < 2; sy += 1) {
         for (let sx = 0; sx < 2; sx += 1) {
           const nx = ((col + (sx + 0.5) / 2) / COLS) * 2 - 1

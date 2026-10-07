@@ -1,11 +1,9 @@
-// GitHub contribution data
 export type ContributionDay = { contributionCount: number; date: string };
 export type Week = { contributionDays: ContributionDay[] };
 export type ContributionCalendar = { totalContributions: number; weeks: Week[] };
 
 export const CURRENT_YEAR = new Date().getFullYear();
 
-// outside the component so it survives page changes
 const requests: Record<number, Promise<ContributionCalendar>> = {};
 
 export function loadYear(year: number) {
@@ -22,10 +20,9 @@ export function loadYear(year: number) {
             }
         })
         .catch((err) => {
-            delete requests[year]; // so a retry fetches again
+            delete requests[year];
             throw err;
         }));
 }
 
-// start loading when the app starts
 loadYear(CURRENT_YEAR).catch(() => {});

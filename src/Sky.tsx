@@ -121,9 +121,7 @@ export function Sky() {
 
     const draw = (time: number) => {
       const breath = reduced ? 0 : Math.sin(time * .000055)
-      // glow follows the ascii moon
       const anchor = document.getElementById('moon')?.getBoundingClientRect()
-      // no moon on this page: light from the top right, no halo
       const radius = anchor ? anchor.width * .5 : width * .09
       const moonX = anchor ? anchor.left + anchor.width * .5 : width * 1.02
       const moonY = anchor ? anchor.top + anchor.height * .5 : -height * .15

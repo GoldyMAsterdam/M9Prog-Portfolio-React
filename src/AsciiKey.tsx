@@ -4,20 +4,16 @@ import { NAME } from './projects'
 const RAMP = ' .:;+ox#%@'
 const COLS = 74
 const ROWS = 40
-// mono chars are ~0.6 as wide as they are tall
 const CELL = 0.6
 
 type Vec = [number, number, number]
 type Glyph = (x: number, y: number) => number
 
-// 5x7 pixel letters
 const BITMAPS: Record<string, string[]> = {
   G: ['01110', '10001', '10000', '10111', '10001', '10001', '01110'],
   T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
 }
 
-// distance to the nearest lit pixel on the top face (x right, y away from the viewer),
-// so edges anti-alias instead of whole pixel rows dropping out between text rows
 const PX = 0.13
 function pixelGlyph(rows: string[]): Glyph {
   const cells: [number, number][] = []
@@ -26,7 +22,6 @@ function pixelGlyph(rows: string[]): Glyph {
 }
 const GLYPHS = Object.fromEntries(Object.entries(BITMAPS).map(([k, rows]) => [k, pixelGlyph(rows)]))
 
-// rounded box that gets narrower at the top
 function keycap(x: number, y: number, z: number) {
   const taper = 1 - 0.14 * Math.min(1, Math.max(0, (y + 0.5) / 1))
   const qx = Math.abs(x / taper) - 0.78
@@ -70,7 +65,6 @@ function render(turn: number, letter: Glyph) {
       const length = Math.hypot(...n) || 1
       const lambert = Math.max(0, (n[0] * light[0] + n[1] * light[1] + n[2] * light[2]) / length / Math.hypot(...light))
       let tone = 0.12 + lambert * 0.88
-      // letter on the top face
       const [kx, ky, kz] = toKey(p)
       if (ky > 0.3) {
         const ink = Math.min(1, Math.max(0, 0.5 - (letter(kx, kz) - 0.03) / 0.03))

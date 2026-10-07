@@ -3,7 +3,6 @@ import { NAME } from './projects'
 
 const focus = 'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent'
 
-// Inner pages only. The home page is one scroll and needs no nav.
 export function Nav() {
   return (
     <nav className="m-auto max-w-[1400px] px-10 pt-8 max-lap:px-6 max-phone:px-4" aria-label="Main navigation">
